@@ -99,12 +99,12 @@ public class DwayneCameraMovement : MonoBehaviour {
 	void ClimbTheMountain () {
 		characterAnim.SetTrigger("Climb");
 		iTween.MoveTo(gameObject, iTween.Hash(
-			"position", new Vector3(620.0f, 407.5f, 505.0f),
+			"position", new Vector3(615.0f, 407.2f, 505.0f),
 			"time", climbTheMountainSpeed,
 			"easeType", "linear"
 		));
 		iTween.RotateTo(gameObject, iTween.Hash(
-			"rotation", new Vector3(1.0f, 423.0f, 3.7f),
+			"rotation", new Vector3(0.0f, 423.0f, 0.0f),
 			"time", climbTheMountainSpeed,
 			"easeType", "easeInExpo"
 		));
