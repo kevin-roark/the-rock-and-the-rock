@@ -14,8 +14,9 @@ public class DwayneCameraMovement : MonoBehaviour {
 
 	static bool testing = true;
 	float riseSpeed = testing ? 1.0f : 7.0f;
-	float runToMountainSpeed = testing ? 10.0f : 45.0f;
-	float lookUpAtMountainSpeed = 7.0f;
+	float runToMountainSpeed = testing ? 5.0f : 45.0f;
+	float lookUpAtMountainSpeed = testing ? 2.0f : 7.0f;
+	float climbTheMountainSpeed = testing ? 10.0f : 45.0f;
 
 	void Start ()
 	{
@@ -41,6 +42,13 @@ public class DwayneCameraMovement : MonoBehaviour {
 		CancelInvoke("SometimesDive");
 		yield return new WaitForSeconds(1.0f);
 		LookUpAtMountain();
+
+		// after looking up at the mountain, start climbing it
+		yield return new WaitForSeconds(lookUpAtMountainSpeed + 1.0f);
+		ClimbTheMountain();
+
+		yield return new WaitForSeconds(climbTheMountainSpeed);
+		characterAnim.SetTrigger("StopClimb");
 	}
 		
 	void Update ()
@@ -85,6 +93,20 @@ public class DwayneCameraMovement : MonoBehaviour {
 			"rotation", new Vector3(-55.0f, 421.0f, 2.1f),
 			"time", lookUpAtMountainSpeed,
 			"easeType", "linear"
+		));
+	}
+
+	void ClimbTheMountain () {
+		characterAnim.SetTrigger("Climb");
+		iTween.MoveTo(gameObject, iTween.Hash(
+			"position", new Vector3(620.0f, 407.5f, 505.0f),
+			"time", climbTheMountainSpeed,
+			"easeType", "linear"
+		));
+		iTween.RotateTo(gameObject, iTween.Hash(
+			"rotation", new Vector3(1.0f, 423.0f, 3.7f),
+			"time", climbTheMountainSpeed,
+			"easeType", "easeInExpo"
 		));
 	}
 }
