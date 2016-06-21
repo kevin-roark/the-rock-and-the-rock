@@ -17,6 +17,7 @@ public class DwayneCameraMovement : MonoBehaviour {
 	float runToMountainSpeed = testing ? 5.0f : 45.0f;
 	float lookUpAtMountainSpeed = testing ? 2.0f : 7.0f;
 	float climbTheMountainSpeed = testing ? 10.0f : 45.0f;
+	float walkToCircleSpeed = testing ? 5.0f : 20.0f;
 
 	void Start ()
 	{
@@ -47,8 +48,11 @@ public class DwayneCameraMovement : MonoBehaviour {
 		yield return new WaitForSeconds(lookUpAtMountainSpeed + 1.0f);
 		ClimbTheMountain();
 
+		// ater climbing the mountain, walk to where your friends wait for you
 		yield return new WaitForSeconds(climbTheMountainSpeed);
 		characterAnim.SetTrigger("StopClimb");
+		yield return new WaitForSeconds(1.0f);
+		WalkToCircle();
 	}
 		
 	void Update ()
@@ -99,7 +103,7 @@ public class DwayneCameraMovement : MonoBehaviour {
 	void ClimbTheMountain () {
 		characterAnim.SetTrigger("Climb");
 		iTween.MoveTo(gameObject, iTween.Hash(
-			"position", new Vector3(615.0f, 407.2f, 505.0f),
+			"position", new Vector3(621.0f, 407.2f, 482.6f),
 			"time", climbTheMountainSpeed,
 			"easeType", "linear"
 		));
@@ -107,6 +111,14 @@ public class DwayneCameraMovement : MonoBehaviour {
 			"rotation", new Vector3(0.0f, 423.0f, 0.0f),
 			"time", climbTheMountainSpeed,
 			"easeType", "easeInExpo"
+		));
+	}
+
+	void WalkToCircle () {
+		iTween.MoveTo(gameObject, iTween.Hash(
+			"position", new Vector3(680.5f, 407.15f, 517.0f),
+			"time", walkToCircleSpeed,
+			"easeType", "linear"
 		));
 	}
 }
