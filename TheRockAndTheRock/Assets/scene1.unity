@@ -585,6 +585,10 @@ Prefab:
       propertyPath: m_Name
       value: Tshirt
       objectReference: {fileID: 0}
+    - target: {fileID: 100148, guid: 8da9d4b592c0841f7a540bad09719461, type: 3}
+      propertyPath: m_TagString
+      value: OtherDwayne
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 8da9d4b592c0841f7a540bad09719461, type: 3}
   m_IsPrefabParent: 0
@@ -1034,6 +1038,10 @@ Prefab:
     - target: {fileID: 100146, guid: 9f80890c7a1bd4f1b9fd36460573ecc5, type: 3}
       propertyPath: m_Name
       value: Tank
+      objectReference: {fileID: 0}
+    - target: {fileID: 100146, guid: 9f80890c7a1bd4f1b9fd36460573ecc5, type: 3}
+      propertyPath: m_TagString
+      value: OtherDwayne
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 9f80890c7a1bd4f1b9fd36460573ecc5, type: 3}
@@ -1646,6 +1654,10 @@ Prefab:
       propertyPath: m_Name
       value: Workout
       objectReference: {fileID: 0}
+    - target: {fileID: 100144, guid: e96476789de444f5d9daabcfa42c8d75, type: 3}
+      propertyPath: m_TagString
+      value: OtherDwayne
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: e96476789de444f5d9daabcfa42c8d75, type: 3}
   m_IsPrefabParent: 0
@@ -2199,7 +2211,7 @@ GameObject:
   - 114: {fileID: 1262634655}
   m_Layer: 0
   m_Name: The Main Dwayne
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2455,6 +2467,10 @@ Prefab:
       propertyPath: m_Name
       value: Lady
       objectReference: {fileID: 0}
+    - target: {fileID: 100146, guid: 69912caae11b045dd982f93c98236844, type: 3}
+      propertyPath: m_TagString
+      value: OtherDwayne
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 69912caae11b045dd982f93c98236844, type: 3}
   m_IsPrefabParent: 0
@@ -2504,6 +2520,10 @@ Prefab:
     - target: {fileID: 100144, guid: 78b21ee2c1b6b46bc9531aa996aaf458, type: 3}
       propertyPath: m_Name
       value: Cop
+      objectReference: {fileID: 0}
+    - target: {fileID: 100144, guid: 78b21ee2c1b6b46bc9531aa996aaf458, type: 3}
+      propertyPath: m_TagString
+      value: OtherDwayne
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 78b21ee2c1b6b46bc9531aa996aaf458, type: 3}
@@ -2583,6 +2603,10 @@ Prefab:
     - target: {fileID: 100144, guid: d657af5bd0b894a0ca47537f634c56d4, type: 3}
       propertyPath: m_Name
       value: Wrestle
+      objectReference: {fileID: 0}
+    - target: {fileID: 100144, guid: d657af5bd0b894a0ca47537f634c56d4, type: 3}
+      propertyPath: m_TagString
+      value: OtherDwayne
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: d657af5bd0b894a0ca47537f634c56d4, type: 3}
@@ -2721,6 +2745,10 @@ Prefab:
     - target: {fileID: 100144, guid: 28c72dbd3cca4486f9cdc0c716299ff9, type: 3}
       propertyPath: m_Name
       value: BadBoy
+      objectReference: {fileID: 0}
+    - target: {fileID: 100144, guid: 28c72dbd3cca4486f9cdc0c716299ff9, type: 3}
+      propertyPath: m_TagString
+      value: OtherDwayne
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 28c72dbd3cca4486f9cdc0c716299ff9, type: 3}
@@ -3136,7 +3164,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1945126513}
   m_LocalRotation: {x: 0, y: -0.52249885, z: 0, w: -0.85264}
-  m_LocalPosition: {x: 400, y: 407.15, z: 517}
+  m_LocalPosition: {x: 813, y: 407.15, z: 614}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_LocalEulerAnglesHint: {x: 0, y: 423, z: 0}
   m_Children:

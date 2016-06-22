@@ -9,6 +9,8 @@ public class DwayneCameraMovement : MonoBehaviour {
 	public Animator characterAnim;
 	bool hasCharacterAnim = false;
 
+	GameObject[] otherDwaynes;
+
 	int speedHash = Animator.StringToHash("Speed");
 	float currentSpeed = 0.0f;
 
@@ -18,10 +20,14 @@ public class DwayneCameraMovement : MonoBehaviour {
 	float lookUpAtMountainSpeed = testing ? 2.0f : 7.0f;
 	float climbTheMountainSpeed = testing ? 10.0f : 45.0f;
 	float walkToCircleSpeed = testing ? 5.0f : 20.0f;
+	float turnToFaceEdgeOfMountainSpeed = 5.0f;
+	float runToEdgeOfMountainSpeed = testing ? 6.0f : 15.0f;
 
 	void Start ()
 	{
 		cameraAnim = GetComponent<Animator>();
+
+		otherDwaynes = GameObject.FindGameObjectsWithTag("OtherDwayne");
 
 		StartCoroutine(StartAnimationChain());
 	}
@@ -52,7 +58,17 @@ public class DwayneCameraMovement : MonoBehaviour {
 		yield return new WaitForSeconds(climbTheMountainSpeed);
 		characterAnim.SetTrigger("StopClimb");
 		yield return new WaitForSeconds(1.0f);
+		currentSpeed = 0.5f;
 		WalkToCircle();
+
+		// after walking to circle, briefly wait then all sprint to edge of mountain
+		yield return new WaitForSeconds(walkToCircleSpeed);
+		currentSpeed = 0.0f;
+		yield return new WaitForSeconds(3.0f);
+		RotateOtherDwaynesToFaceEdgeOfMountain();
+		yield return new WaitForSeconds(turnToFaceEdgeOfMountainSpeed);
+		currentSpeed = 1.0f;
+		RunAllDwaynesToEdgeOfMountain();
 	}
 		
 	void Update ()
@@ -118,6 +134,40 @@ public class DwayneCameraMovement : MonoBehaviour {
 		iTween.MoveTo(gameObject, iTween.Hash(
 			"position", new Vector3(680.5f, 407.15f, 517.0f),
 			"time", walkToCircleSpeed,
+			"easeType", "linear"
+		));
+	}
+
+	void RotateOtherDwaynesToFaceEdgeOfMountain () {
+		for (int i = 0; i < otherDwaynes.Length; i++) {
+			iTween.RotateTo(otherDwaynes[i], iTween.Hash(
+				"rotation", new Vector3(0.0f, 423.0f, 0.0f),
+				"time", turnToFaceEdgeOfMountainSpeed,
+				"easeType", "easeInCubic"
+			));
+		}
+	}
+
+	void RunAllDwaynesToEdgeOfMountain () {
+		RunDwayneToEdgeOfMountain(gameObject);
+
+		for (int i = 0; i < otherDwaynes.Length; i++) {
+			RunDwayneToEdgeOfMountain(otherDwaynes[i]);
+		}
+	}
+
+	void RunDwayneToEdgeOfMountain (GameObject dwayne) {
+		Vector3 position = new Vector3(
+			813.0f + Random.value * 20.0f - 10.0f,
+			dwayne.transform.position.y,
+			614.0f + Random.value * 20.0f - 10.0f
+		);
+
+		float speed = runToEdgeOfMountainSpeed - Random.value * 1.2f;
+
+		iTween.MoveTo(dwayne, iTween.Hash(
+			"position", position,
+			"time", speed,
 			"easeType", "linear"
 		));
 	}
