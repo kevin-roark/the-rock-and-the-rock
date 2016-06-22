@@ -2110,6 +2110,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   characterAnim: {fileID: 1262634654}
+  rockCamera: {fileID: 919954644}
 --- !u!1 &1199933491
 GameObject:
   m_ObjectHideFlags: 0
@@ -3164,7 +3165,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1945126513}
   m_LocalRotation: {x: 0, y: -0.52249885, z: 0, w: -0.85264}
-  m_LocalPosition: {x: 813, y: 407.15, z: 614}
+  m_LocalPosition: {x: 872.9, y: 407.15, z: 625.5}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_LocalEulerAnglesHint: {x: 0, y: 423, z: 0}
   m_Children:

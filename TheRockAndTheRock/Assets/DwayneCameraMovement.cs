@@ -9,6 +9,8 @@ public class DwayneCameraMovement : MonoBehaviour {
 	public Animator characterAnim;
 	bool hasCharacterAnim = false;
 
+	public GameObject rockCamera;
+
 	GameObject[] otherDwaynes;
 
 	int speedHash = Animator.StringToHash("Speed");
@@ -153,6 +155,14 @@ public class DwayneCameraMovement : MonoBehaviour {
 
 		for (int i = 0; i < otherDwaynes.Length; i++) {
 			RunDwayneToEdgeOfMountain(otherDwaynes[i]);
+		}
+
+		if (rockCamera != null) {
+			iTween.MoveTo(rockCamera, iTween.Hash(
+				"position", new Vector3(860.0f, rockCamera.transform.position.y + 70.0f, 620.0f),
+				"time", runToEdgeOfMountainSpeed,
+				"easeType", "easeInQuad"
+			));
 		}
 	}
 
