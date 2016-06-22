@@ -70,6 +70,7 @@ public class DwayneCameraMovement : MonoBehaviour {
 		RotateOtherDwaynesToFaceEdgeOfMountain();
 		yield return new WaitForSeconds(turnToFaceEdgeOfMountainSpeed);
 		currentSpeed = 1.0f;
+		setOtherDwaynesSpeed(1.0f);
 		RunAllDwaynesToEdgeOfMountain();
 	}
 		
@@ -151,10 +152,10 @@ public class DwayneCameraMovement : MonoBehaviour {
 	}
 
 	void RunAllDwaynesToEdgeOfMountain () {
-		RunDwayneToEdgeOfMountain(gameObject);
+		RunDwayneToEdgeOfMountain(gameObject, 0.5f);
 
 		for (int i = 0; i < otherDwaynes.Length; i++) {
-			RunDwayneToEdgeOfMountain(otherDwaynes[i]);
+			RunDwayneToEdgeOfMountain(otherDwaynes[i], 0.0f);
 		}
 
 		if (rockCamera != null) {
@@ -166,7 +167,7 @@ public class DwayneCameraMovement : MonoBehaviour {
 		}
 	}
 
-	void RunDwayneToEdgeOfMountain (GameObject dwayne) {
+	void RunDwayneToEdgeOfMountain (GameObject dwayne, float delay) {
 		Vector3 position = new Vector3(
 			813.0f + Random.value * 20.0f - 10.0f,
 			dwayne.transform.position.y,
@@ -178,7 +179,18 @@ public class DwayneCameraMovement : MonoBehaviour {
 		iTween.MoveTo(dwayne, iTween.Hash(
 			"position", position,
 			"time", speed,
+			"delay", delay,
 			"easeType", "linear"
 		));
+	}
+
+	void setOtherDwaynesSpeed(float speed) {
+		for (int i = 0; i < otherDwaynes.Length; i++) {
+			GameObject dwayne = otherDwaynes[i];
+			Animator anim = dwayne.GetComponent<Animator>();
+			if (anim) {
+				anim.SetFloat(speedHash, speed);
+			}
+		}
 	}
 }
