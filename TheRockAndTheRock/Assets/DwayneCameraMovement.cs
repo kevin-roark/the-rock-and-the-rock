@@ -10,8 +10,10 @@ public class DwayneCameraMovement : MonoBehaviour {
 	bool hasCharacterAnim = false;
 
 	public GameObject rockCamera;
+	public GameObject wingsObject;
 
 	GameObject[] otherDwaynes;
+	GameObject[] allWings;
 
 	int speedHash = Animator.StringToHash("Speed");
 	float currentSpeed = 0.0f;
@@ -30,8 +32,32 @@ public class DwayneCameraMovement : MonoBehaviour {
 		cameraAnim = GetComponent<Animator>();
 
 		otherDwaynes = GameObject.FindGameObjectsWithTag("OtherDwayne");
+		allWings = new GameObject[otherDwaynes.Length + 1];
+
+		// add wings to all dwaynes
+		AddWingsToDwayne(GameObject.FindGameObjectWithTag("Player"), 0);
+		for (int i = 0; i < otherDwaynes.Length; i++) {
+			AddWingsToDwayne(otherDwaynes[i], i + 1);
+		}
+		SetWingsVisible(false);
 
 		StartCoroutine(StartAnimationChain());
+	}
+
+	void AddWingsToDwayne (GameObject dwayne, int idx) {
+		GameObject wings = Object.Instantiate(wingsObject);
+		wings.transform.parent = dwayne.transform;
+		wings.transform.localRotation = new Quaternion();
+		wings.transform.localScale = new Vector3(0.0f, 0.0f, 0.0f);
+		wings.transform.localPosition = new Vector3(0.0f, 1.056f, -0.238f);
+
+		allWings[idx] = wings;
+	}
+
+	void SetWingsVisible (bool visible) {
+		for (int i = 0; i < allWings.Length; i++) {
+			allWings[i].transform.localScale = visible ? new Vector3(0.4f, 0.4f, 0.4f) : new Vector3(0.0f, 0.0f, 0.0f);
+		}
 	}
 
 	IEnumerator StartAnimationChain () {
