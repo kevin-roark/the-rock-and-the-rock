@@ -20,12 +20,16 @@ public class DwayneCameraMovement : MonoBehaviour {
 
 	static bool testing = true;
 	float riseSpeed = testing ? 1.0f : 7.0f;
-	float runToMountainSpeed = testing ? 5.0f : 45.0f;
-	float lookUpAtMountainSpeed = testing ? 2.0f : 7.0f;
-	float climbTheMountainSpeed = testing ? 10.0f : 45.0f;
-	float walkToCircleSpeed = testing ? 5.0f : 20.0f;
-	float turnToFaceEdgeOfMountainSpeed = 5.0f;
-	float runToEdgeOfMountainSpeed = testing ? 6.0f : 15.0f;
+	float runToMountainSpeed = testing ? 1.0f : 45.0f;
+	float lookUpAtMountainSpeed = testing ? 1.0f : 7.0f;
+	float climbTheMountainSpeed = testing ? 1.0f : 45.0f;
+	float walkToCircleSpeed = testing ? 1.0f : 20.0f;
+	float turnToFaceEdgeOfMountainSpeed = 1.0f;
+	float runToEdgeOfMountainSpeed = testing ? 1.0f : 15.0f;
+	float jumpFromMountainSpeed = 1.5f;
+	float fallFromMountainSpeed = testing ? 8.0f : 24.0f;
+	float timeFallingWithWings = 2.0f;
+	float flyToHeavenSpeed = testing ? 8.0f : 60.0f;
 
 	void Start ()
 	{
@@ -98,6 +102,19 @@ public class DwayneCameraMovement : MonoBehaviour {
 		currentSpeed = 1.0f;
 		setOtherDwaynesSpeed(1.0f);
 		RunAllDwaynesToEdgeOfMountain();
+
+		// after sprinting to edge... pause then fuckin jump
+		yield return new WaitForSeconds(runToEdgeOfMountainSpeed);
+		currentSpeed = 0.0f;
+		setOtherDwaynesSpeed(0.0f);
+		yield return new WaitForSeconds(3.0f);
+		JumpAllDwaynesFromEdgeOfMountain();
+
+		// after falling gain wings and fuckin fly to the sky
+		yield return new WaitForSeconds(jumpFromMountainSpeed + fallFromMountainSpeed - timeFallingWithWings);
+		SetWingsVisible(true);
+		yield return new WaitForSeconds(timeFallingWithWings);
+		FlyAllDwaynesToHeaven();
 	}
 		
 	void Update ()
@@ -186,9 +203,8 @@ public class DwayneCameraMovement : MonoBehaviour {
 
 		if (rockCamera != null) {
 			iTween.MoveTo(rockCamera, iTween.Hash(
-				"position", new Vector3(860.0f, rockCamera.transform.position.y + 70.0f, 620.0f),
-				"time", runToEdgeOfMountainSpeed,
-				"easeType", "easeInQuad"
+				"position", new Vector3(950.0f, 666.0f, 700.0f),
+				"time", 2.0f
 			));
 		}
 	}
@@ -200,13 +216,61 @@ public class DwayneCameraMovement : MonoBehaviour {
 			614.0f + Random.value * 20.0f - 10.0f
 		);
 
-		float speed = runToEdgeOfMountainSpeed - Random.value * 1.2f;
-
+		float speed = runToEdgeOfMountainSpeed - delay - Random.value * (1.2f - delay);
 		iTween.MoveTo(dwayne, iTween.Hash(
 			"position", position,
 			"time", speed,
 			"delay", delay,
 			"easeType", "linear"
+		));
+	}
+
+	void JumpAllDwaynesFromEdgeOfMountain () {
+		JumpDwayneFromEdgeOfMountain(gameObject);
+		for (int i = 0; i < otherDwaynes.Length; i++) {
+			JumpDwayneFromEdgeOfMountain(otherDwaynes[i]);
+		}
+	}
+
+	void JumpDwayneFromEdgeOfMountain (GameObject dwayne) {
+		// jump
+		iTween.MoveBy(dwayne, iTween.Hash(
+			"amount", new Vector3(53.0f + Random.value * 10.0f, 40.0f, 65.0f + Random.value * 10.0f),
+			"time", jumpFromMountainSpeed,
+			"easeType", "easeOutQuad"
+		));
+
+		// fall
+		iTween.MoveBy(dwayne, iTween.Hash(
+			"amount", new Vector3(0.0f, -390.0f, 0.0f),
+			"time", fallFromMountainSpeed,
+			"easeType", "easeInOutQuad",
+			"delay", jumpFromMountainSpeed
+		));
+		iTween.RotateBy(dwayne, iTween.Hash(
+			"amount", new Vector3(1.0f, 8.0f, -1.0f),
+			"time", fallFromMountainSpeed,
+			"delay", jumpFromMountainSpeed
+		));
+	}
+
+	void FlyAllDwaynesToHeaven () {
+		FlyDwayneToHeaven(gameObject);
+		for (int i = 0; i < otherDwaynes.Length; i++) {
+			FlyDwayneToHeaven(otherDwaynes[i]);
+		}
+	}
+
+	void FlyDwayneToHeaven (GameObject dwayne) {
+		iTween.MoveBy(dwayne, iTween.Hash(
+			"amount", new Vector3(Random.value * 20.0f - 10.0f, 1000.0f, Random.value * 20.0f - 10.0f),
+			"time", flyToHeavenSpeed,
+			"easeType", "linear"
+		));
+		iTween.RotateTo(dwayne, iTween.Hash(
+			"rotation", new Vector3(),
+			"time", flyToHeavenSpeed,
+			"easeType", "easeOutCubic"
 		));
 	}
 
