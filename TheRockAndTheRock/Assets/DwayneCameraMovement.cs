@@ -28,7 +28,7 @@ public class DwayneCameraMovement : MonoBehaviour {
 	float runToEdgeOfMountainSpeed = testing ? 5.0f : 15.0f;
 	float jumpFromMountainSpeed = 1.5f;
 	float fallFromMountainSpeed = testing ? 8.0f : 24.0f;
-	float timeFallingWithWings = 2.0f;
+	float timeFallingWithWings = 3.0f;
 	float flyToHeavenSpeed = testing ? 8.0f : 60.0f;
 
 	void Start ()
@@ -263,7 +263,7 @@ public class DwayneCameraMovement : MonoBehaviour {
 
 	void FlyDwayneToHeaven (GameObject dwayne) {
 		iTween.MoveBy(dwayne, iTween.Hash(
-			"amount", new Vector3(Random.value * 20.0f - 10.0f, 3000.0f, Random.value * 20.0f - 10.0f),
+			"amount", new Vector3(Random.value * 20.0f - 10.0f, 5000.0f, Random.value * 20.0f - 10.0f),
 			"time", flyToHeavenSpeed,
 			"easeType", "linear"
 		));
