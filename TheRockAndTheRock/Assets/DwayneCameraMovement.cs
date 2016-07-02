@@ -71,9 +71,10 @@ public class DwayneCameraMovement : MonoBehaviour {
 
 		// after rising ends (should be smarter about this but whatever) let's start fuckin moving
 		yield return new WaitForSeconds(riseSpeed + 3.0f);
-		currentSpeed = 1.0f;
 		RunToMountain();
-		InvokeRepeating("SometimesDive", 0.0f, 3.0f);
+
+		// while we are running, zoom rock camera out
+		StartCoroutine(LerpCameraFOV(rockCamera.GetComponent<Camera>(), 30.0f, runToMountainSpeed * 0.8f));
 
 		// stop just short of the mountain, stop running animation, look up
 		yield return new WaitForSeconds(runToMountainSpeed);
@@ -82,15 +83,20 @@ public class DwayneCameraMovement : MonoBehaviour {
 		yield return new WaitForSeconds(1.0f);
 		LookUpAtMountain();
 
+		// while looking up zoom camera in slightly
+		StartCoroutine(LerpCameraFOV(rockCamera.GetComponent<Camera>(), 18.0f, lookUpAtMountainSpeed));
+
 		// after looking up at the mountain, start climbing it
 		yield return new WaitForSeconds(lookUpAtMountainSpeed + 1.0f);
 		ClimbTheMountain();
+
+		// as we climb, zoom rock camera back in to a close level
+		StartCoroutine(LerpCameraFOV(rockCamera.GetComponent<Camera>(), 7.25f, climbTheMountainSpeed * 0.8f));
 
 		// ater climbing the mountain, walk to where your friends wait for you
 		yield return new WaitForSeconds(climbTheMountainSpeed);
 		characterAnim.SetTrigger("StopClimb");
 		yield return new WaitForSeconds(1.0f);
-		currentSpeed = 0.5f;
 		WalkToCircle();
 
 		// after walking to circle, briefly wait then all sprint to edge of mountain
@@ -99,8 +105,6 @@ public class DwayneCameraMovement : MonoBehaviour {
 		yield return new WaitForSeconds(3.0f);
 		RotateOtherDwaynesToFaceEdgeOfMountain();
 		yield return new WaitForSeconds(turnToFaceEdgeOfMountainSpeed);
-		currentSpeed = 1.0f;
-		setOtherDwaynesSpeed(1.0f);
 		RunAllDwaynesToEdgeOfMountain();
 
 		// after sprinting to edge... pause then fuckin jump
@@ -137,11 +141,14 @@ public class DwayneCameraMovement : MonoBehaviour {
 	}
 
 	void RunToMountain () {
+		currentSpeed = 1.0f;
 		iTween.MoveTo(gameObject, iTween.Hash(
 			"position", new Vector3(569.0f, 21.0f, 447.0f), 
 			"time", runToMountainSpeed,
 			"easeType", "linear"
 		));
+
+		InvokeRepeating("SometimesDive", 0.0f, 3.0f);
 	}
 
 	void SometimesDive () {
@@ -177,6 +184,7 @@ public class DwayneCameraMovement : MonoBehaviour {
 	}
 
 	void WalkToCircle () {
+		currentSpeed = 0.5f;
 		iTween.MoveTo(gameObject, iTween.Hash(
 			"position", new Vector3(680.5f, 407.15f, 517.0f),
 			"time", walkToCircleSpeed,
@@ -195,6 +203,9 @@ public class DwayneCameraMovement : MonoBehaviour {
 	}
 
 	void RunAllDwaynesToEdgeOfMountain () {
+		currentSpeed = 1.0f;
+		setOtherDwaynesSpeed(1.0f);
+
 		RunDwayneToEdgeOfMountain(gameObject, 0.5f);
 
 		for (int i = 0; i < otherDwaynes.Length; i++) {
@@ -274,13 +285,24 @@ public class DwayneCameraMovement : MonoBehaviour {
 		));
 	}
 
-	void setOtherDwaynesSpeed(float speed) {
+	void setOtherDwaynesSpeed (float speed) {
 		for (int i = 0; i < otherDwaynes.Length; i++) {
 			GameObject dwayne = otherDwaynes[i];
 			Animator anim = dwayne.GetComponent<Animator>();
 			if (anim) {
 				anim.SetFloat(speedHash, speed);
 			}
+		}
+	}
+
+	IEnumerator LerpCameraFOV (Camera cam, float fov, float speed) {
+		float originalFOV = cam.fieldOfView;
+		float totalTime = 0.0f;
+		while (totalTime < speed) {
+			totalTime = Mathf.Min(totalTime + Time.deltaTime, speed);
+			float amt = Time.deltaTime / speed;
+			cam.fieldOfView = Mathf.Lerp(originalFOV, fov, totalTime / speed);
+			yield return null;
 		}
 	}
 }
