@@ -1,8 +1,9 @@
 ﻿<Properties StartupItem="Assembly-CSharp.csproj">
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="Unity.Instance.Unity Editor" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/DwayneCameraMovement.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Video Textures/VideoController.cs">
     <Files>
-      <File FileName="Assets/DwayneCameraMovement.cs" Line="266" Column="58" />
+      <File FileName="Assets/DwayneCameraMovement.cs" Line="87" Column="96" />
+      <File FileName="Assets/Video Textures/VideoController.cs" Line="24" Column="5" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
