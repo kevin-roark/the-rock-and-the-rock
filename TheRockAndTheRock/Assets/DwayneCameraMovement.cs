@@ -66,7 +66,7 @@ public class DwayneCameraMovement : MonoBehaviour {
 
 	IEnumerator StartAnimationChain () {
 		// wait for a bit staring at ground, then wake the HELL up
-		yield return new WaitForSeconds(2.0f);
+		yield return new WaitForSeconds(6.0f);
 		Rise();
 
 		// after rising ends (should be smarter about this but whatever) let's start fuckin moving
