@@ -17,6 +17,7 @@ public class DwayneCameraMovement : MonoBehaviour {
 
 	int speedHash = Animator.StringToHash("Speed");
 	float currentSpeed = 0.0f;
+	bool hasStarted = false;
 
 	static bool testing = true;
 	float riseSpeed = testing ? 3.0f : 7.0f;
@@ -45,6 +46,12 @@ public class DwayneCameraMovement : MonoBehaviour {
 		}
 		SetWingsVisible(false);
 
+		Events.instance.AddListener<GameFilmStartEvent>(StartGameFilm);
+	}
+
+	public void StartGameFilm (GameFilmStartEvent e) {
+		if (hasStarted) return;
+		hasStarted = true;
 		StartCoroutine(StartAnimationChain());
 	}
 
