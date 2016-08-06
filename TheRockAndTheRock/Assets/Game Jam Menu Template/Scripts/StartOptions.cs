@@ -20,7 +20,6 @@ public class StartOptions : MonoBehaviour {
 	[HideInInspector] public AnimationClip fadeAlphaAnimationClip;		//Animation clip fading out UI elements alpha
 
 
-	private PlayMusic playMusic;										//Reference to PlayMusic script
 	private float fastFadeIn = .01f;									//Very short fade time (10 milliseconds) to start playing music immediately without a click/glitch
 	private ShowPanels showPanels;										//Reference to ShowPanels script on UI GameObject, to show and hide panels
 
@@ -33,22 +32,12 @@ public class StartOptions : MonoBehaviour {
 		//Get a reference to ShowPanels attached to UI object
 		showPanels = GetComponent<ShowPanels> ();
 
-		//Get a reference to PlayMusic attached to UI object
-		playMusic = GetComponent<PlayMusic> ();
-
 		dwayneMovement = GetComponent<DwayneCameraMovement>();
 	}
 
 
 	public void StartButtonClicked()
 	{
-		//If changeMusicOnStart is true, fade out volume of music group of AudioMixer by calling FadeDown function of PlayMusic, using length of fadeColorAnimationClip as time. 
-		//To change fade time, change length of animation "FadeToColor"
-		if (changeMusicOnStart) 
-		{
-			playMusic.FadeDown(fadeColorAnimationClip.length);
-		}
-
 		//If changeScenes is true, start fading and change scenes halfway through animation when screen is blocked by FadeImage
 		if (changeScenes) 
 		{
@@ -71,11 +60,7 @@ public class StartOptions : MonoBehaviour {
 	//Once the level has loaded, check if we want to call PlayLevelMusic
 	void OnLevelWasLoaded()
 	{
-		//if changeMusicOnStart is true, call the PlayLevelMusic function of playMusic
-		if (changeMusicOnStart)
-		{
-			playMusic.PlayLevelMusic ();
-		}	
+		
 	}
 
 
@@ -120,9 +105,6 @@ public class StartOptions : MonoBehaviour {
 
 	public void PlayNewMusic()
 	{
-		//Fade up music nearly instantly without a click 
-		playMusic.FadeUp (fastFadeIn);
-		//Play music clip assigned to mainMusic in PlayMusic script
-		playMusic.PlaySelectedMusic (1);
+		
 	}
 }

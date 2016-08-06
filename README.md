@@ -2,7 +2,7 @@
 
 ## TODO
 * add skybox (http://www.custommapmakers.org/skyboxes.php)
-* sound effects
+* non-testing part timings
 
 ## ACK
 * wings source http://www.blendswap.com/blends/view/73674
