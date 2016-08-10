@@ -97,3 +97,21 @@ public class PauseEvent : GameEvent {
 		isPaused = p;
 	}
 }
+
+public enum DwayneState {
+	RunningInDesert,
+	ClimbingMountain,
+	RunningToCircle,
+	ReachedCircle,
+	RunningToEdge,
+	FallingFromEdge,
+	FloatingToSky
+}
+
+public class DwayneStateChangeEvent : GameEvent {
+	public DwayneState state;
+
+	public DwayneStateChangeEvent(DwayneState s) {
+		state = s;
+	}
+}

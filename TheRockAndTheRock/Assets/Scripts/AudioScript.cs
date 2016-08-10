@@ -13,11 +13,13 @@ public class AudioScript : MonoBehaviour {
 	private AudioState breathingState = AudioState.Off;
 
 	private float resetTime = 0.01f;	// Very short time used to fade in near instantly without a click
-	private float fadeSpeed = 0.2f; 
+	private float fadeSpeed = 0.2f;
+	private bool hasReachedCircle = false;
 
 	void Awake ()  {
 		Events.instance.AddListener<PauseEvent>(handlePause);
 		Events.instance.AddListener<GameFilmStartEvent>(handleGameStart);
+		Events.instance.AddListener<DwayneStateChangeEvent>(handleDwayneState);
 
 		setState(rockSource, AudioState.On);
 		setState(breathingSource, AudioState.Off);
@@ -93,8 +95,17 @@ public class AudioScript : MonoBehaviour {
 			setState(rockSource, AudioState.On);
 			setState(breathingSource, AudioState.Off);
 		} else {
-			setState(rockSource, AudioState.FadingOut);
+			if (!hasReachedCircle) {
+				setState(rockSource, AudioState.FadingOut);
+			}
 			setState(breathingSource, AudioState.FadingIn);
+		}
+	}
+
+	void handleDwayneState (DwayneStateChangeEvent e) {
+		if (e.state == DwayneState.ReachedCircle) {
+			hasReachedCircle = true;
+			setState(rockSource, AudioState.FadingIn);
 		}
 	}
 }
