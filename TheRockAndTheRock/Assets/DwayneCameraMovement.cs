@@ -20,13 +20,14 @@ public class DwayneCameraMovement : MonoBehaviour {
 	bool hasStarted = false;
 
 	public static bool testing = false;
-	float riseSpeed = testing ? 3.0f : 7.0f;
-	float runToMountainSpeed = 5.0f; //testing ? 5.0f : 45.0f;
-	float lookUpAtMountainSpeed = 3.0f ; //testing ? 3.0f : 7.0f;
-	float climbTheMountainSpeed = 5.0f; // testing ? 5.0f : 35.0f;
-	float walkToCircleSpeed = 5.0f; //testing ? 5.0f : 17.5f;
+	float riseSpeed = testing ? 3.0f : 6.0f;
+	float lookAroundAfterRisingSpeed = 6.0f;
+	float runToMountainSpeed = testing ? 5.0f : 45.0f;
+	float lookUpAtMountainSpeed = testing ? 3.0f : 7.0f;
+	float climbTheMountainSpeed = testing ? 5.0f : 35.0f;
+	float walkToCircleSpeed = testing ? 5.0f : 17.5f;
 	float turnToFaceEdgeOfMountainSpeed = 2.0f;
-	float runToEdgeOfMountainSpeed = 5.0f; //testing ? 5.0f : 16.0f;
+	float runToEdgeOfMountainSpeed = testing ? 5.0f : 16.0f;
 	float jumpFromMountainSpeed = 1.5f;
 	float fallFromMountainSpeed = testing ? 8.0f : 16.0f;
 	float timeFallingWithWings = 3.0f;
@@ -77,7 +78,10 @@ public class DwayneCameraMovement : MonoBehaviour {
 		Rise();
 
 		// after rising ends (should be smarter about this but whatever) let's start fuckin moving
-		yield return new WaitForSeconds(riseSpeed + 3.0f);
+		yield return new WaitForSeconds(riseSpeed);
+		LookAround();
+
+		yield return new WaitForSeconds(lookAroundAfterRisingSpeed);
 		Events.instance.Raise(new DwayneStateChangeEvent(DwayneState.RunningInDesert));
 		RunToMountain();
 
@@ -161,6 +165,27 @@ public class DwayneCameraMovement : MonoBehaviour {
 			"rotation", new Vector3(532.7f, 234.0f, 179.3f),
 			"time", riseSpeed,
 			"easeType", "easeInQuad"
+		));
+	}
+
+	void LookAround () {
+		iTween.RotateBy(gameObject, iTween.Hash(
+			"amount", new Vector3(0, -0.12f, 0),
+			"time", 1.25f,
+			"easeType", "linear",
+			"delay", 0.5f
+		));
+		iTween.RotateBy(gameObject, iTween.Hash(
+			"amount", new Vector3(0, 0.2f, 0),
+			"time", 2.0f,
+			"delay", 2.25f,
+			"easeType", "linear"
+		));
+		iTween.RotateBy(gameObject, iTween.Hash(
+			"amount", new Vector3(0, -0.08f, 0),
+			"time", 1.0f,
+			"delay", 4.5f,
+			"easeType", "linear"
 		));
 	}
 
