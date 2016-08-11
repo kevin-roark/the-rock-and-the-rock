@@ -31,7 +31,7 @@ public class DwayneCameraMovement : MonoBehaviour {
 	float jumpFromMountainSpeed = 1.5f;
 	float fallFromMountainSpeed = testing ? 8.0f : 16.0f;
 	float timeFallingWithWings = 3.0f;
-	float flyToHeavenSpeed = testing ? 8.0f : 60.0f;
+	float flyToHeavenSpeed = testing ? 8.0f : 180.0f;
 
 	void Start ()
 	{
@@ -130,7 +130,7 @@ public class DwayneCameraMovement : MonoBehaviour {
 		yield return new WaitForSeconds(runToEdgeOfMountainSpeed);
 		currentSpeed = 0.0f;
 		setOtherDwaynesSpeed(0.0f);
-		yield return new WaitForSeconds(0.75f);
+		yield return new WaitForSeconds(1.8f);
 		Events.instance.Raise(new DwayneStateChangeEvent(DwayneState.FallingFromEdge));
 		JumpAllDwaynesFromEdgeOfMountain();
 		SetDwaynesJumping(true);
@@ -354,7 +354,7 @@ public class DwayneCameraMovement : MonoBehaviour {
 		// look at the rock
 		CameraTarget target = dwayne.GetComponent<CameraTarget>();
 		if (target) {
-			target.ActivateForFrames(400);
+			target.ActivateForFrames(1200);
 		}
 	}
 

@@ -7,9 +7,11 @@ public class ShowPanels : MonoBehaviour {
 	public GameObject optionsTint;							//Store a reference to the Game Object OptionsTint 
 	public GameObject menuPanel;							//Store a reference to the Game Object MenuPanel 
 	public GameObject pausePanel;							//Store a reference to the Game Object PausePanel 
+	public GameObject goodbyePanel;
 
 	void Start () {
 		Events.instance.AddListener<PauseEvent>(HandlePause);
+		Events.instance.AddListener<DwayneStateChangeEvent>(HandleDwayneState);
 	}
 
 	//Call this function to activate and display the Options panel during the main menu
@@ -58,5 +60,18 @@ public class ShowPanels : MonoBehaviour {
 		} else {
 			HidePausePanel();
 		}
+	}
+
+	void HandleDwayneState (DwayneStateChangeEvent e) {
+		if (e.state == DwayneState.FloatingToSky) {
+			StartCoroutine(ShowCredits());
+		}
+	}
+
+	IEnumerator ShowCredits () {
+		// after 30 seconds of flying we show the credits
+		yield return new WaitForSeconds (24.0f);
+
+		goodbyePanel.SetActive(true);
 	}
 }
