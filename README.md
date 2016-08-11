@@ -1,7 +1,6 @@
 # the-rock-and-the-rock
 
 ## TODO
-* non-testing part timings
 * ending screen
 
 ## ACK
