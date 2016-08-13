@@ -69,8 +69,8 @@ public class ShowPanels : MonoBehaviour {
 	}
 
 	IEnumerator ShowCredits () {
-		// after 30 seconds of flying we show the credits
-		yield return new WaitForSeconds (24.0f);
+		// after 60 seconds of flying we show the credits
+		yield return new WaitForSeconds (60.0f);
 
 		goodbyePanel.SetActive(true);
 	}

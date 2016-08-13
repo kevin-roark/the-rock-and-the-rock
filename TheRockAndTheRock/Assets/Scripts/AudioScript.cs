@@ -6,6 +6,7 @@ public class AudioScript : MonoBehaviour {
 
 	public AudioSource rockSource;
 	public AudioSource breathingSource;
+	public AudioSource heavenSource;
 
 	private enum AudioState { Off, FadingOut, FadingIn, On }
 
@@ -15,6 +16,7 @@ public class AudioScript : MonoBehaviour {
 	private float resetTime = 0.01f;	// Very short time used to fade in near instantly without a click
 	private float fadeSpeed = 0.2f;
 	private bool hasReachedCircle = false;
+	private bool isFloating = false;
 
 	void Awake ()  {
 		Events.instance.AddListener<PauseEvent>(handlePause);
@@ -91,6 +93,9 @@ public class AudioScript : MonoBehaviour {
 	}
 
 	void handlePause (PauseEvent e) {
+		if (isFloating)
+			return;
+
 		if (e.isPaused) {
 			setState(rockSource, AudioState.On);
 			setState(breathingSource, AudioState.Off);
@@ -106,6 +111,11 @@ public class AudioScript : MonoBehaviour {
 		if (e.state == DwayneState.ReachedCircle) {
 			hasReachedCircle = true;
 			setState(rockSource, AudioState.FadingIn);
+		} else if (e.state == DwayneState.FloatingToSky) {
+			isFloating = true;
+			setState(heavenSource, AudioState.On);
+			setState(rockSource, AudioState.FadingOut);
+			setState(breathingSource, AudioState.FadingOut);
 		}
 	}
 }

@@ -30,7 +30,7 @@ public class DwayneCameraMovement : MonoBehaviour {
 	float runToEdgeOfMountainSpeed = testing ? 5.0f : 16.0f;
 	float jumpFromMountainSpeed = 1.5f;
 	float fallFromMountainSpeed = testing ? 8.0f : 16.0f;
-	float timeFallingWithWings = 3.0f;
+	float timeFallingWithWings = 6.0f;
 	float flyToHeavenSpeed = testing ? 8.0f : 180.0f;
 
 	void Start ()
@@ -144,10 +144,10 @@ public class DwayneCameraMovement : MonoBehaviour {
 		yield return new WaitForSeconds(fallFromMountainSpeed - timeFallingWithWings);
 		SetWingsVisible(true);
 		SetDwaynesFalling(false);
+		Events.instance.Raise(new DwayneStateChangeEvent(DwayneState.FloatingToSky));
 		yield return new WaitForSeconds(timeFallingWithWings);
 		currentSpeed = 1.0f;
 		setOtherDwaynesSpeed(1.0f);
-		Events.instance.Raise(new DwayneStateChangeEvent(DwayneState.FloatingToSky));
 		FlyAllDwaynesToHeaven();
 	}
 		
